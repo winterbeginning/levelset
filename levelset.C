@@ -51,23 +51,25 @@ int main(int argc, char *argv[])
         Info << "Time = " << runTime.timeName() << nl << endl;
 
         volVectorField gradPsi(fvc::grad(psi));   
-        volVectorField nVecfv(gradPsi/(mag(gradPsi)+scalar(1.0e-10)/dimChange)); 
-        volScalarField U_n(U & nVecfv);
-        volVectorField U_nVecfv(U_n * nVecfv);
+        //volVectorField nVecfv(gradPsi/(mag(gradPsi)+scalar(1.0e-10)/dimChange)); 
+        //volScalarField U_n(U & nVecfv);
+        //volVectorField U_nVecfv(U_n * nVecfv);
+        volScalarField U_n(U & gradPsi);
 
-        surfaceScalarField phi_n = fvc::flux(U_nVecfv);
+        //surfaceScalarField phi_n = fvc::flux(U_nVecfv);
 
         fvScalarMatrix psiEqn
         (
             fvm::ddt(psi)
-          + fvm::div(phi_n, psi)
+          //+ fvm::div(phi_n, psi)
+          + U_n
         );
 
-        psiEqn.solve();
+        
 
-        psi0 = psi;
-
+        psi = psi0;
         #include "init.H"
+        psiEqn.solve();
 
         runTime.write();
     }
