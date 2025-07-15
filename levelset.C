@@ -40,20 +40,34 @@ int main(int argc, char *argv[])
     #include "createMesh.H"
     #include "createFields.H"
 
+    psi = psi0;
 
-
+    #include "init.H"
+    
     // 时间循环
     while (runTime.run())
     {
         runTime++;
         Info << "Time = " << runTime.timeName() << nl << endl;
 
-        fvScalarMatrix phiEqn
+        volVectorField gradPsi(fvc::grad(psi));   
+        volVectorField nVecfv(gradPsi/(mag(gradPsi)+scalar(1.0e-10)/dimChange)); 
+        volScalarField U_n(U & nVecfv);
+        volVectorField U_nVecfv(U_n * nVecfv);
+
+        surfaceScalarField phi_n = fvc::flux(U_nVecfv);
+
+        fvScalarMatrix psiEqn
         (
-            fvm::ddt(phi)
-          + fvm::div(phiFlux, phi)
+            fvm::ddt(psi)
+          + fvm::div(phi_n, psi)
         );
-        phiEqn.solve();
+
+        psiEqn.solve();
+
+        psi0 = psi;
+
+        #include "init.H"
 
         runTime.write();
     }

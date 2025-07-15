@@ -1049,4 +1049,5 @@ CMakeFiles/levelset.dir/levelset.C.o: \
  /opt/openfoam9/src/OpenFOAM/lnInclude/listOutput.H \
  /opt/openfoam9/src/OpenFOAM/lnInclude/createTime.H \
  /opt/openfoam9/src/OpenFOAM/lnInclude/createMesh.H \
- /home/winter/OpenFOAM/winter-9/applications/solvers/levelset/createFields.H
+ /home/winter/OpenFOAM/winter-9/applications/solvers/levelset/createFields.H \
+ /home/winter/OpenFOAM/winter-9/applications/solvers/levelset/init.H
