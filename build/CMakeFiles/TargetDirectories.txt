@@ -1,3 +1,0 @@
-/home/winter/OpenFOAM/winter-9/applications/solvers/levelset/build/CMakeFiles/levelset.dir
-/home/winter/OpenFOAM/winter-9/applications/solvers/levelset/build/CMakeFiles/edit_cache.dir
-/home/winter/OpenFOAM/winter-9/applications/solvers/levelset/build/CMakeFiles/rebuild_cache.dir
