@@ -40,9 +40,19 @@ int main(int argc, char *argv[])
     #include "createMesh.H"
     #include "createFields.H"
 
-    psi = psi0;
+    const scalar pi = constant::mathematical::pi;
+    forAll(mesh.C(), cellI)
+    {
+        const scalar x = mesh.C()[cellI].x();
+        const scalar y = mesh.C()[cellI].y();
+        U[cellI].x() = -Foam::pow(Foam::sin(pi*x), 2) * Foam::sin(2*pi*y);
+        U[cellI].y() = -Foam::pow(Foam::sin(pi*y), 2) * Foam::sin(2*pi*x);
+        scalar distance = Foam::sqrt(Foam::pow(x-0.5, 2) + Foam::pow((y-0.75),2))-0.15;
+        psi[cellI] = distance;
+    }
 
-    #include "init.H"
+    // psi0 = psi;
+    // #include "init.H"
     
     // 时间循环
     while (runTime.run())
@@ -50,24 +60,25 @@ int main(int argc, char *argv[])
         runTime++;
         Info << "Time = " << runTime.timeName() << nl << endl;
 
-        volVectorField gradPsi(fvc::grad(psi));   
-        volVectorField nVecfv(gradPsi/(mag(gradPsi)+scalar(1.0e-10)/dimChange)); 
-        volScalarField U_n(U & nVecfv);
-        volVectorField U_nVecfv(U_n * nVecfv);
+        #include "veo.H"
 
-        surfaceScalarField phi_n = fvc::flux(U_nVecfv);
+        //volVectorField gradPsi(fvc::grad(psi));   
+        //volScalarField Vn(U & gradPsi); 
+
+        surfaceScalarField phiU = fvc::interpolate(U) & mesh.Sf();
 
         fvScalarMatrix psiEqn
         (
             fvm::ddt(psi)
-          + fvm::div(phi_n, psi)
+          //+ Vn * mag(gradPsi)  
+          + fvm::div(phiU, psi, "div(phiU,psi)")
+          - fvm::Sp(fvc::div(phiU),psi)
         );
 
         psiEqn.solve();
 
-        psi0 = psi;
-
-        #include "init.H"
+        // psi0 = psi;
+        // #include "init.H"
 
         runTime.write();
     }

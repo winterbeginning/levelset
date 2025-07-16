@@ -15,7 +15,7 @@ FoamFile
 
 ddtSchemes      { default Euler; }
 gradSchemes     { default Gauss linear; }
-divSchemes      { default Gauss linear; div(phi_n,psi) Gauss linear; }
+divSchemes      { div(phiU,psi) Gauss limitedLinear 1.0; }
 laplacianSchemes{ default none; }
 interpolationSchemes { default linear; }
 snGradSchemes   { default none; }
