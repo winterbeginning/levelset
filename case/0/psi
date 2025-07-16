@@ -19,10 +19,14 @@ internalField   uniform 0;
 
 boundaryField
 {
-    bottom { type zeroGradient; }
-    top    { type zeroGradient; }
-    left   { type zeroGradient; }
-    right  { type zeroGradient; }
+    // bottom { type zeroGradient; }
+    // top    { type zeroGradient; }
+    // left   { type zeroGradient; }
+    // right  { type zeroGradient; }
+    bottom { type symmetry; }
+    top    { type symmetry; }
+    left   { type symmetry; }
+    right  { type symmetry; }
     // bottom { type fixedValue;value uniform 1; }
     // top    { type fixedValue;value uniform 1; }
     // left   { type fixedValue;value uniform 1; }

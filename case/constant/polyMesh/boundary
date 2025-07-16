@@ -18,34 +18,38 @@ FoamFile
 (
     bottom
     {
-        type            patch;
-        nFaces          100;
-        startFace       19800;
+        type            symmetry;
+        inGroups        List<word> 1(symmetry);
+        nFaces          300;
+        startFace       179400;
     }
     top
     {
-        type            patch;
-        nFaces          100;
-        startFace       19900;
+        type            symmetry;
+        inGroups        List<word> 1(symmetry);
+        nFaces          300;
+        startFace       179700;
     }
     left
     {
-        type            patch;
-        nFaces          100;
-        startFace       20000;
+        type            symmetry;
+        inGroups        List<word> 1(symmetry);
+        nFaces          300;
+        startFace       180000;
     }
     right
     {
-        type            patch;
-        nFaces          100;
-        startFace       20100;
+        type            symmetry;
+        inGroups        List<word> 1(symmetry);
+        nFaces          300;
+        startFace       180300;
     }
     frontAndBack
     {
         type            empty;
         inGroups        List<word> 1(empty);
-        nFaces          20000;
-        startFace       20200;
+        nFaces          180000;
+        startFace       180600;
     }
 )
 

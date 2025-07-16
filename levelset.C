@@ -77,8 +77,11 @@ int main(int argc, char *argv[])
 
         psiEqn.solve();
 
-        // psi0 = psi;
-        // #include "init.H"
+        // if(mesh.time().timeIndex()%100==0)
+        // {
+        //     psi0 = psi;
+        //     #include "init.H"
+        // }
 
         runTime.write();
     }
